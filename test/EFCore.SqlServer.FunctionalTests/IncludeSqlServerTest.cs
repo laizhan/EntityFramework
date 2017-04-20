@@ -779,7 +779,7 @@ ORDER BY [t3].[CustomerID]",
 SELECT [c2.Orders].[OrderID], [c2.Orders].[CustomerID], [c2.Orders].[EmployeeID], [c2.Orders].[OrderDate]
 FROM [Orders] AS [c2.Orders]
 INNER JOIN (
-    SELECT DISTINCT [t5].[CustomerID], [t4].[CustomerID] AS [c0]
+    SELECT DISTINCT [t5].[CustomerID], [t4].[CustomerID] AS [CustomerID0]
     FROM (
         SELECT TOP(@__p_0) [c3].*
         FROM [Customers] AS [c3]
@@ -792,7 +792,7 @@ INNER JOIN (
         OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
     ) AS [t5]
 ) AS [t6] ON [c2.Orders].[CustomerID] = [t6].[CustomerID]
-ORDER BY [t6].[c0], [t6].[CustomerID]");
+ORDER BY [t6].[CustomerID0], [t6].[CustomerID]");
             }
         }
 
@@ -847,7 +847,7 @@ ORDER BY [t3].[CustomerID]",
 SELECT [c2.Orders].[OrderID], [c2.Orders].[CustomerID], [c2.Orders].[EmployeeID], [c2.Orders].[OrderDate]
 FROM [Orders] AS [c2.Orders]
 INNER JOIN (
-    SELECT DISTINCT TOP(@__p_1) [t5].[CustomerID], [t4].[CustomerID] AS [c0]
+    SELECT DISTINCT TOP(@__p_1) [t5].[CustomerID], [t4].[CustomerID] AS [CustomerID0]
     FROM (
         SELECT TOP(@__p_0) [c3].*
         FROM [Customers] AS [c3]
@@ -860,7 +860,7 @@ INNER JOIN (
         OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY
     ) AS [t5]
 ) AS [t6] ON [c2.Orders].[CustomerID] = [t6].[CustomerID]
-ORDER BY [t6].[c0], [t6].[CustomerID]");
+ORDER BY [t6].[CustomerID0], [t6].[CustomerID]");
             }
         }
 

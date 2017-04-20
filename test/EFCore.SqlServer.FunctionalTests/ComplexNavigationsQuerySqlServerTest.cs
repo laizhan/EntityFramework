@@ -273,7 +273,7 @@ ORDER BY [t0].[DefaultText0], [t0].[DefaultText]");
             base.Join_navigation_key_access_optional();
 
             AssertSql(
-                @"SELECT [e1].[Id], [e2].[Id]
+                @"SELECT [e1].[Id] AS [Id1], [e2].[Id] AS [Id2]
 FROM [Level1] AS [e1]
 INNER JOIN [Level2] AS [e2] ON [e1].[Id] = (
     SELECT TOP(1) [subQuery0].[Id]
@@ -287,7 +287,7 @@ INNER JOIN [Level2] AS [e2] ON [e1].[Id] = (
             base.Join_navigation_key_access_required();
 
             AssertSql(
-                @"SELECT [e1].[Id], [e2].[Id]
+                @"SELECT [e1].[Id] AS [Id1], [e2].[Id] AS [Id2]
 FROM [Level1] AS [e1]
 INNER JOIN [Level2] AS [e2] ON [e1].[Id] = [e2].[Level1_Required_Id]");
         }
@@ -417,7 +417,7 @@ WHERE DATEADD(day, [e1.OneToOne_Optional_FK].[Id], DATEADD(day, 15E0, [e1.OneToO
             base.Join_navigation_in_outer_selector_translated_to_extra_join();
 
             AssertSql(
-                @"SELECT [e1].[Id], [e2].[Id]
+                @"SELECT [e1].[Id] AS [Id1], [e2].[Id] AS [Id2]
 FROM [Level1] AS [e1]
 LEFT JOIN [Level2] AS [e1.OneToOne_Optional_FK] ON [e1].[Id] = [e1.OneToOne_Optional_FK].[Level1_Optional_Id]
 INNER JOIN [Level2] AS [e2] ON [e1.OneToOne_Optional_FK].[Id] = [e2].[Id]");
@@ -428,7 +428,7 @@ INNER JOIN [Level2] AS [e2] ON [e1.OneToOne_Optional_FK].[Id] = [e2].[Id]");
             base.Join_navigation_in_outer_selector_translated_to_extra_join_nested();
 
             AssertSql(
-                @"SELECT [e1].[Id], [e3].[Id]
+                @"SELECT [e1].[Id] AS [Id1], [e3].[Id] AS [Id3]
 FROM [Level1] AS [e1]
 LEFT JOIN [Level2] AS [e1.OneToOne_Required_FK] ON [e1].[Id] = [e1.OneToOne_Required_FK].[Level1_Required_Id]
 LEFT JOIN [Level3] AS [e1.OneToOne_Required_FK.OneToOne_Optional_FK] ON [e1.OneToOne_Required_FK].[Id] = [e1.OneToOne_Required_FK.OneToOne_Optional_FK].[Level2_Optional_Id]
@@ -440,7 +440,7 @@ INNER JOIN [Level3] AS [e3] ON [e1.OneToOne_Required_FK.OneToOne_Optional_FK].[I
             base.Join_navigation_in_outer_selector_translated_to_extra_join_nested2();
 
             AssertSql(
-                @"SELECT [e3].[Id], [e1].[Id]
+                @"SELECT [e3].[Id] AS [Id3], [e1].[Id] AS [Id1]
 FROM [Level3] AS [e3]
 INNER JOIN [Level2] AS [e3.OneToOne_Required_FK_Inverse] ON [e3].[Level2_Required_Id] = [e3.OneToOne_Required_FK_Inverse].[Id]
 LEFT JOIN [Level1] AS [e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse] ON [e3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id] = [e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse].[Id]
@@ -452,7 +452,7 @@ INNER JOIN [Level1] AS [e1] ON [e3.OneToOne_Required_FK_Inverse.OneToOne_Optiona
             base.Join_navigation_in_inner_selector_translated_to_subquery();
 
             AssertSql(
-                @"SELECT [e2].[Id], [e1].[Id]
+                @"SELECT [e2].[Id] AS [Id2], [e1].[Id] AS [Id1]
 FROM [Level2] AS [e2]
 INNER JOIN [Level1] AS [e1] ON [e2].[Id] = (
     SELECT TOP(1) [subQuery0].[Id]
@@ -466,7 +466,7 @@ INNER JOIN [Level1] AS [e1] ON [e2].[Id] = (
             base.Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision();
 
             AssertSql(
-                @"SELECT [e2].[Id], [e1].[Id], [e3].[Id]
+                @"SELECT [e2].[Id] AS [Id2], [e1].[Id] AS [Id1], [e3].[Id] AS [Id3]
 FROM [Level2] AS [e2]
 INNER JOIN [Level1] AS [e1] ON [e2].[Id] = (
     SELECT TOP(1) [subQuery0].[Id]
@@ -485,7 +485,7 @@ INNER JOIN [Level3] AS [e3] ON [e2].[Id] = (
             base.Join_navigation_translated_to_subquery_non_key_join();
 
             AssertSql(
-                @"SELECT [e2].[Id], [e2].[Name], [e1].[Id], [e1].[Name]
+                @"SELECT [e2].[Id] AS [Id2], [e2].[Name] AS [Name2], [e1].[Id] AS [Id1], [e1].[Name] AS [Name1]
 FROM [Level2] AS [e2]
 INNER JOIN [Level1] AS [e1] ON [e2].[Name] = (
     SELECT TOP(1) [subQuery0].[Name]
@@ -499,7 +499,7 @@ INNER JOIN [Level1] AS [e1] ON [e2].[Name] = (
             base.Join_navigation_translated_to_subquery_self_ref();
 
             AssertSql(
-                @"SELECT [e1].[Id], [e2].[Id]
+                @"SELECT [e1].[Id] AS [Id1], [e2].[Id] AS [Id2]
 FROM [Level1] AS [e1]
 INNER JOIN [Level1] AS [e2] ON [e1].[Id] = (
     SELECT TOP(1) [subQuery0].[Id]
@@ -513,7 +513,7 @@ INNER JOIN [Level1] AS [e2] ON [e1].[Id] = (
             base.Join_navigation_translated_to_subquery_nested();
 
             AssertSql(
-                @"SELECT [e3].[Id], [e1].[Id]
+                @"SELECT [e3].[Id] AS [Id3], [e1].[Id] AS [Id1]
 FROM [Level3] AS [e3]
 INNER JOIN [Level1] AS [e1] ON [e3].[Id] = (
     SELECT TOP(1) [subQuery.OneToOne_Optional_FK0].[Id]
@@ -528,7 +528,7 @@ INNER JOIN [Level1] AS [e1] ON [e3].[Id] = (
             base.Join_navigation_translated_to_subquery_deeply_nested_non_key_join();
 
             AssertSql(
-                @"SELECT [e4].[Id], [e4].[Name], [e1].[Id], [e1].[Name]
+                @"SELECT [e4].[Id] AS [Id4], [e4].[Name] AS [Name4], [e1].[Id] AS [Id1], [e1].[Name] AS [Name1]
 FROM [Level4] AS [e4]
 INNER JOIN [Level1] AS [e1] ON [e4].[Name] = (
     SELECT TOP(1) [subQuery.OneToOne_Optional_FK.OneToOne_Required_PK0].[Name]
@@ -544,7 +544,7 @@ INNER JOIN [Level1] AS [e1] ON [e4].[Name] = (
             base.Join_navigation_translated_to_subquery_deeply_nested_required();
 
             AssertSql(
-                @"SELECT [e4].[Id], [e4].[Name], [e1].[Id], [e1].[Name]
+                @"SELECT [e4].[Id] AS [Id4], [e4].[Name] AS [Name4], [e1].[Id] AS [Id1], [e1].[Name] AS [Name1]
 FROM [Level1] AS [e1]
 INNER JOIN [Level4] AS [e4] ON [e1].[Name] = (
     SELECT TOP(1) [subQuery.OneToOne_Required_FK_Inverse.OneToOne_Required_PK_Inverse0].[Name]
@@ -885,7 +885,7 @@ WHERE ([l1.OneToOne_Optional_FK.OneToOne_Required_FK].[Name] <> N'L3 05') OR [l1
             base.SelectMany_navigation_comparison1();
 
             AssertSql(
-                @"SELECT [l11].[Id], [l12].[Id]
+                @"SELECT [l11].[Id] AS [Id1], [l12].[Id] AS [Id2]
 FROM [Level1] AS [l11]
 CROSS JOIN [Level1] AS [l12]
 WHERE [l11].[Id] = [l12].[Id]");
@@ -896,7 +896,7 @@ WHERE [l11].[Id] = [l12].[Id]");
             base.SelectMany_navigation_comparison2();
 
             AssertSql(
-                @"SELECT [l1].[Id], [l2].[Id]
+                @"SELECT [l1].[Id] AS [Id1], [l2].[Id] AS [Id2]
 FROM [Level1] AS [l1]
 CROSS JOIN [Level2] AS [l2]
 LEFT JOIN [Level1] AS [l2.OneToOne_Optional_FK_Inverse] ON [l2].[Level1_Optional_Id] = [l2.OneToOne_Optional_FK_Inverse].[Id]
@@ -908,7 +908,7 @@ WHERE [l1].[Id] = [l2.OneToOne_Optional_FK_Inverse].[Id]");
             base.SelectMany_navigation_comparison3();
 
             AssertSql(
-                @"SELECT [l1].[Id], [l2].[Id]
+                @"SELECT [l1].[Id] AS [Id1], [l2].[Id] AS [Id2]
 FROM [Level1] AS [l1]
 LEFT JOIN [Level2] AS [l1.OneToOne_Optional_FK] ON [l1].[Id] = [l1.OneToOne_Optional_FK].[Level1_Optional_Id]
 CROSS JOIN [Level2] AS [l2]
@@ -920,7 +920,7 @@ WHERE [l1.OneToOne_Optional_FK].[Id] = [l2].[Id]");
             base.Where_complex_predicate_with_with_nav_prop_and_OrElse1();
 
             AssertSql(
-                @"SELECT [l1].[Id], [l2].[Id]
+                @"SELECT [l1].[Id] AS [Id1], [l2].[Id] AS [Id2]
 FROM [Level1] AS [l1]
 LEFT JOIN [Level2] AS [l1.OneToOne_Optional_FK] ON [l1].[Id] = [l1.OneToOne_Optional_FK].[Level1_Optional_Id]
 CROSS JOIN [Level2] AS [l2]
@@ -1000,7 +1000,7 @@ WHERE ([e.OneToOne_Required_FK_Inverse.OneToOne_Required_FK_Inverse].[Id] = [e.O
                 @"SELECT [e].[Id], [e].[Name], CASE
     WHEN [e.OneToOne_Optional_FK].[Id] IS NOT NULL
     THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
-END, [e.OneToOne_Optional_FK].[Id], [e.OneToOne_Optional_FK].[Name]
+END, [e.OneToOne_Optional_FK].[Id] AS [Id0], [e.OneToOne_Optional_FK].[Name] AS [Name0]
 FROM [Level1] AS [e]
 LEFT JOIN [Level2] AS [e.OneToOne_Optional_FK] ON [e].[Id] = [e.OneToOne_Optional_FK].[Level1_Optional_Id]");
         }
@@ -1536,7 +1536,7 @@ WHERE EXISTS (
             base.Correlated_subquery_doesnt_project_unnecessary_columns_in_top_level_join();
 
             AssertSql(
-                @"SELECT [e1].[Name], [e2].[Id]
+                @"SELECT [e1].[Name] AS [Name1], [e2].[Id] AS [Id2]
 FROM [Level1] AS [e1]
 INNER JOIN [Level2] AS [e2] ON [e1].[Id] = (
     SELECT TOP(1) [subQuery0].[Id]
@@ -1735,7 +1735,7 @@ ORDER BY [l3].[Level2_Required_Id]");
             AssertSql(
                 @"@__p_0: 10
 
-SELECT TOP(@__p_0) [l3.OneToOne_Required_FK_Inverse].[Id], [l3.OneToOne_Required_FK_Inverse].[Date], [l3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id], [l3.OneToOne_Required_FK_Inverse].[Level1_Required_Id], [l3.OneToOne_Required_FK_Inverse].[Name], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Optional_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Optional_Self_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Required_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Required_Self_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToOne_Optional_PK_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToOne_Optional_SelfId], [l3].[Name]
+SELECT TOP(@__p_0) [l3.OneToOne_Required_FK_Inverse].[Id], [l3.OneToOne_Required_FK_Inverse].[Date], [l3.OneToOne_Required_FK_Inverse].[Level1_Optional_Id], [l3.OneToOne_Required_FK_Inverse].[Level1_Required_Id], [l3.OneToOne_Required_FK_Inverse].[Name], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Optional_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Optional_Self_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Required_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToMany_Required_Self_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToOne_Optional_PK_InverseId], [l3.OneToOne_Required_FK_Inverse].[OneToOne_Optional_SelfId], [l3].[Name] AS [Name0]
 FROM [Level3] AS [l3]
 INNER JOIN [Level2] AS [l3.OneToOne_Required_FK_Inverse] ON [l3].[Level2_Required_Id] = [l3.OneToOne_Required_FK_Inverse].[Id]
 ORDER BY [l3].[Level2_Required_Id]");
@@ -2350,7 +2350,7 @@ ORDER BY [l1_outer].[Id]");
             AssertSql(
                 @"@__p_0: 2
 
-SELECT TOP(@__p_0) [l1].[Id], [l1.OneToOne_Optional_FK].[Name]
+SELECT TOP(@__p_0) [l1].[Id], [l1.OneToOne_Optional_FK].[Name] AS [Brand]
 FROM [Level1] AS [l1]
 LEFT JOIN [Level2] AS [l1.OneToOne_Optional_FK] ON [l1].[Id] = [l1.OneToOne_Optional_FK].[Level1_Optional_Id]
 ORDER BY [l1.OneToOne_Optional_FK].[Name], [l1].[Id]");
